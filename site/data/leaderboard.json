@@ -1,0 +1,895 @@
+{
+  "schema_version": 1,
+  "run_id": "run-5",
+  "last_updated": "2026-10-07T18:54:57.423100+00:00",
+  "exported": "2026-10-07T18:55:50.661184+00:00",
+  "metric": "mean item score in [0,1]: exact/numeric 0 or 1, extraction share of fields, rubric judge score / 2",
+  "run_notes": {
+    "note": "run-3 responses (max_output_tokens 2048) with empty replies retried at a larger budget; see repaired_with_max_output_tokens on each row.",
+    "repaired_replies": 3,
+    "excluded_replies": 4,
+    "total_replies": 658
+  },
+  "bootstrap": {
+    "method": "percentile, resampling tasks with replacement",
+    "iterations": 10000,
+    "level": 0.95,
+    "seed": 0
+  },
+  "rubric_skipped": true,
+  "judge": null,
+  "totals": {
+    "dataset_tasks": 100,
+    "verified_tasks": 94,
+    "scored_tasks": 94,
+    "models": 7,
+    "scored_by_category": {
+      "documents": 20,
+      "payments_banking": 19,
+      "hinglish_support": 15,
+      "law_policy": 20,
+      "gst_tax": 20
+    },
+    "scored_by_language": {
+      "en": 66,
+      "hi": 7,
+      "hinglish": 21
+    },
+    "scored_by_answer_type": {
+      "extraction": 15,
+      "numeric": 58,
+      "exact": 21
+    },
+    "dataset_by_answer_type": {
+      "extraction": 15,
+      "numeric": 58,
+      "exact": 21,
+      "rubric": 6
+    }
+  },
+  "params": {
+    "numeric_relative_tolerance": 0.005,
+    "judge_agreement_threshold": 0.8,
+    "rubric_scale": "2 = the reply meets every criterion.\n1 = the reply meets some criteria but misses at least one, and has no serious violation.\n0 = the reply meets fewer than half the criteria, OR seriously violates a \"never / does not / without\" criterion (for example asks for an OTP, PIN or password, or invents a specific date or promise).",
+    "temperature": 0.0
+  },
+  "verification": {
+    "statement": "The \"verified\": true flags were set by an AI assistant (Claude) at the dataset owner's request, not by a human reviewer. Each task was confirmed in one of two ways; anything that could not be confirmed was left false.",
+    "rows": [
+      {
+        "tasks": "gst-001 – gst-020",
+        "method": "Recomputed with separate exact-fraction code (not the generator). Income-tax slabs, the 87A rebate (nil tax up to 12,00,000) and the 75,000 standard deduction match PIB / Income Tax Department pages; tax at 16,00,000 reproduces the published 1,20,000."
+      },
+      {
+        "tasks": "doc-001 – doc-020",
+        "method": "Invoices and bank statements were re-parsed from the prompt text and recomputed line by line (line amounts, discounts, GST, grand totals, running balances). Rent-agreement values were checked against the clauses in the prompt."
+      },
+      {
+        "tasks": "hin-001 – hin-008",
+        "method": "Read and judged independently (intent / sentiment / language labels; 9 days > 7-day window)."
+      },
+      {
+        "tasks": "hin-009 – hin-015",
+        "method": "Every extracted value was checked to occur verbatim in the customer message."
+      },
+      {
+        "tasks": "law-001 – law-003",
+        "method": "Consumer Protection Act 2019 s.69 (two years) and s.41 (45 days; 50% pre-deposit) match the statute text as quoted on legal-database mirrors; the India Code pages were unreachable."
+      },
+      {
+        "tasks": "law-004 – law-007",
+        "method": "Thresholds (District <= 50 lakh, State 50 lakh–2 crore, National > 2 crore, by consideration paid) read in the Rules, 2021 text (copy hosted on thc.nic.in)."
+      },
+      {
+        "tasks": "law-008 – law-013",
+        "method": "RTI Act 2005 text read directly (s.6(3), 7(1), 19(1), 19(3), 20(1))."
+      },
+      {
+        "tasks": "law-014",
+        "method": "RTI Rules 2012 PDF on cic.gov.in (application fee ₹10; BPL exempt)."
+      },
+      {
+        "tasks": "law-015 – law-020",
+        "method": "Code on Social Security 2020 text read directly (s.53, s.60)."
+      },
+      {
+        "tasks": "pay-001 – pay-018",
+        "method": "RBI TAT table (Circular of 20 Sep 2019), RBI limited-liability circular (6 Jul 2017) and RBI KYC FAQs read directly; compensation arithmetic recomputed. \"Plain days\" for T+N follows the circular's \"T = calendar date\"."
+      },
+      {
+        "tasks": "pay-019",
+        "method": "RBI Integrated Ombudsman FAQ (30-day no-reply ground)."
+      }
+    ],
+    "held_back": "hin-016 – hin-020 and pay-020: the six rubric tasks. Their criteria are judgement calls and the LLM judge has not been validated against human grades. A human spot-check is still pending: a flag only means the assistant could confirm the answer, not that a person signed off."
+  },
+  "language_labels": {
+    "en": "English",
+    "hi": "Hindi",
+    "hinglish": "Hinglish"
+  },
+  "categories": [
+    {
+      "id": "gst_tax",
+      "slug": "gst-tax",
+      "title": "GST & tax math",
+      "description": "GST slabs, invoices, TDS and simple income tax."
+    },
+    {
+      "id": "hinglish_support",
+      "slug": "hinglish-support",
+      "title": "Hinglish & Hindi support",
+      "description": "Understanding and replying to customer messages in Hinglish and Hindi."
+    },
+    {
+      "id": "documents",
+      "slug": "documents",
+      "title": "Indian documents",
+      "description": "Extracting fields from synthetic invoices, rent agreements and bank statements."
+    },
+    {
+      "id": "law_policy",
+      "slug": "law-policy",
+      "title": "Indian law & policy",
+      "description": "Consumer rights, RTI and labour basics, each tied to an official source."
+    },
+    {
+      "id": "payments_banking",
+      "slug": "payments-banking",
+      "title": "Payments & banking",
+      "description": "UPI failures, refunds, liability and KYC rules."
+    }
+  ],
+  "models": [
+    {
+      "id": "gemini/gemini-3.1-flash-lite",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "label": "gemini-3.1-flash-lite",
+      "overall": {
+        "n": 94,
+        "mean": 0.8936170212765957,
+        "ci95": [
+          0.8297872340425532,
+          0.9468085106382979
+        ]
+      },
+      "categories": {
+        "documents": {
+          "n": 20,
+          "mean": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ]
+        },
+        "gst_tax": {
+          "n": 20,
+          "mean": 0.7,
+          "ci95": [
+            0.5,
+            0.9
+          ]
+        },
+        "hinglish_support": {
+          "n": 15,
+          "mean": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ]
+        },
+        "law_policy": {
+          "n": 20,
+          "mean": 0.9,
+          "ci95": [
+            0.75,
+            1.0
+          ]
+        },
+        "payments_banking": {
+          "n": 19,
+          "mean": 0.8947368421052632,
+          "ci95": [
+            0.7368421052631579,
+            1.0
+          ]
+        }
+      },
+      "languages": {
+        "en": {
+          "n": 66,
+          "mean": 0.8939393939393939,
+          "ci95": [
+            0.8181818181818182,
+            0.9545454545454546
+          ]
+        },
+        "hi": {
+          "n": 7,
+          "mean": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ]
+        },
+        "hinglish": {
+          "n": 21,
+          "mean": 0.8571428571428571,
+          "ci95": [
+            0.7142857142857143,
+            1.0
+          ]
+        }
+      },
+      "api_errors_excluded": 0,
+      "unscored": 0
+    },
+    {
+      "id": "gemini/gemini-3.5-flash-lite",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "label": "gemini-3.5-flash-lite",
+      "overall": {
+        "n": 94,
+        "mean": 0.8936170212765957,
+        "ci95": [
+          0.8297872340425532,
+          0.9574468085106383
+        ]
+      },
+      "categories": {
+        "documents": {
+          "n": 20,
+          "mean": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ]
+        },
+        "gst_tax": {
+          "n": 20,
+          "mean": 0.7,
+          "ci95": [
+            0.5,
+            0.9
+          ]
+        },
+        "hinglish_support": {
+          "n": 15,
+          "mean": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ]
+        },
+        "law_policy": {
+          "n": 20,
+          "mean": 0.9,
+          "ci95": [
+            0.75,
+            1.0
+          ]
+        },
+        "payments_banking": {
+          "n": 19,
+          "mean": 0.8947368421052632,
+          "ci95": [
+            0.7368421052631579,
+            1.0
+          ]
+        }
+      },
+      "languages": {
+        "en": {
+          "n": 66,
+          "mean": 0.8939393939393939,
+          "ci95": [
+            0.8181818181818182,
+            0.9545454545454546
+          ]
+        },
+        "hi": {
+          "n": 7,
+          "mean": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ]
+        },
+        "hinglish": {
+          "n": 21,
+          "mean": 0.8571428571428571,
+          "ci95": [
+            0.7142857142857143,
+            1.0
+          ]
+        }
+      },
+      "api_errors_excluded": 0,
+      "unscored": 0
+    },
+    {
+      "id": "openrouter/meta-llama/llama-3.3-70b-instruct",
+      "provider": "openrouter",
+      "model": "meta-llama/llama-3.3-70b-instruct",
+      "label": "llama-3.3-70b-instruct",
+      "overall": {
+        "n": 94,
+        "mean": 0.7491134751773049,
+        "ci95": [
+          0.6569148936170213,
+          0.8315602836879432
+        ]
+      },
+      "categories": {
+        "documents": {
+          "n": 20,
+          "mean": 0.7375,
+          "ci95": [
+            0.5375,
+            0.9125
+          ]
+        },
+        "gst_tax": {
+          "n": 20,
+          "mean": 0.7,
+          "ci95": [
+            0.5,
+            0.9
+          ]
+        },
+        "hinglish_support": {
+          "n": 15,
+          "mean": 0.9777777777777777,
+          "ci95": [
+            0.9333333333333332,
+            1.0
+          ]
+        },
+        "law_policy": {
+          "n": 20,
+          "mean": 0.7,
+          "ci95": [
+            0.5,
+            0.9
+          ]
+        },
+        "payments_banking": {
+          "n": 19,
+          "mean": 0.6842105263157895,
+          "ci95": [
+            0.47368421052631576,
+            0.8947368421052632
+          ]
+        }
+      },
+      "languages": {
+        "en": {
+          "n": 66,
+          "mean": 0.7537878787878788,
+          "ci95": [
+            0.6477272727272727,
+            0.8484848484848485
+          ]
+        },
+        "hi": {
+          "n": 7,
+          "mean": 0.8571428571428571,
+          "ci95": [
+            0.5714285714285714,
+            1.0
+          ]
+        },
+        "hinglish": {
+          "n": 21,
+          "mean": 0.6984126984126984,
+          "ci95": [
+            0.5079365079365079,
+            0.8888888888888887
+          ]
+        }
+      },
+      "api_errors_excluded": 0,
+      "unscored": 0
+    },
+    {
+      "id": "openrouter/meta-llama/llama-4-maverick",
+      "provider": "openrouter",
+      "model": "meta-llama/llama-4-maverick",
+      "label": "llama-4-maverick",
+      "overall": {
+        "n": 94,
+        "mean": 0.8617021276595744,
+        "ci95": [
+          0.7872340425531915,
+          0.925531914893617
+        ]
+      },
+      "categories": {
+        "documents": {
+          "n": 20,
+          "mean": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ]
+        },
+        "gst_tax": {
+          "n": 20,
+          "mean": 0.95,
+          "ci95": [
+            0.85,
+            1.0
+          ]
+        },
+        "hinglish_support": {
+          "n": 15,
+          "mean": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ]
+        },
+        "law_policy": {
+          "n": 20,
+          "mean": 0.65,
+          "ci95": [
+            0.45,
+            0.85
+          ]
+        },
+        "payments_banking": {
+          "n": 19,
+          "mean": 0.7368421052631579,
+          "ci95": [
+            0.5263157894736842,
+            0.8947368421052632
+          ]
+        }
+      },
+      "languages": {
+        "en": {
+          "n": 66,
+          "mean": 0.8181818181818182,
+          "ci95": [
+            0.7272727272727273,
+            0.9090909090909091
+          ]
+        },
+        "hi": {
+          "n": 7,
+          "mean": 0.8571428571428571,
+          "ci95": [
+            0.5714285714285714,
+            1.0
+          ]
+        },
+        "hinglish": {
+          "n": 21,
+          "mean": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "api_errors_excluded": 0,
+      "unscored": 0
+    },
+    {
+      "id": "openrouter/mistralai/mistral-small-2603",
+      "provider": "openrouter",
+      "model": "mistralai/mistral-small-2603",
+      "label": "mistral-small-2603",
+      "overall": {
+        "n": 94,
+        "mean": 0.6400709219858156,
+        "ci95": [
+          0.5443262411347517,
+          0.7358156028368793
+        ]
+      },
+      "categories": {
+        "documents": {
+          "n": 20,
+          "mean": 0.85,
+          "ci95": [
+            0.7,
+            1.0
+          ]
+        },
+        "gst_tax": {
+          "n": 20,
+          "mean": 0.4,
+          "ci95": [
+            0.2,
+            0.6
+          ]
+        },
+        "hinglish_support": {
+          "n": 15,
+          "mean": 0.9444444444444444,
+          "ci95": [
+            0.8666666666666666,
+            1.0
+          ]
+        },
+        "law_policy": {
+          "n": 20,
+          "mean": 0.6,
+          "ci95": [
+            0.4,
+            0.8
+          ]
+        },
+        "payments_banking": {
+          "n": 19,
+          "mean": 0.47368421052631576,
+          "ci95": [
+            0.2631578947368421,
+            0.6842105263157895
+          ]
+        }
+      },
+      "languages": {
+        "en": {
+          "n": 66,
+          "mean": 0.5909090909090909,
+          "ci95": [
+            0.4696969696969697,
+            0.7121212121212122
+          ]
+        },
+        "hi": {
+          "n": 7,
+          "mean": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ]
+        },
+        "hinglish": {
+          "n": 21,
+          "mean": 0.6746031746031745,
+          "ci95": [
+            0.47619047619047616,
+            0.8571428571428571
+          ]
+        }
+      },
+      "api_errors_excluded": 0,
+      "unscored": 0
+    },
+    {
+      "id": "openrouter/qwen/qwen3.8-27b",
+      "provider": "openrouter",
+      "model": "qwen/qwen3.8-27b",
+      "label": "qwen3.8-27b",
+      "overall": {
+        "n": 90,
+        "mean": 0.9444444444444444,
+        "ci95": [
+          0.8888888888888888,
+          0.9888888888888889
+        ]
+      },
+      "categories": {
+        "documents": {
+          "n": 20,
+          "mean": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ]
+        },
+        "gst_tax": {
+          "n": 20,
+          "mean": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ]
+        },
+        "hinglish_support": {
+          "n": 15,
+          "mean": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ]
+        },
+        "law_policy": {
+          "n": 20,
+          "mean": 0.9,
+          "ci95": [
+            0.75,
+            1.0
+          ]
+        },
+        "payments_banking": {
+          "n": 15,
+          "mean": 0.8,
+          "ci95": [
+            0.6,
+            1.0
+          ]
+        }
+      },
+      "languages": {
+        "en": {
+          "n": 63,
+          "mean": 0.9365079365079365,
+          "ci95": [
+            0.873015873015873,
+            0.9841269841269841
+          ]
+        },
+        "hi": {
+          "n": 7,
+          "mean": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ]
+        },
+        "hinglish": {
+          "n": 20,
+          "mean": 0.95,
+          "ci95": [
+            0.85,
+            1.0
+          ]
+        }
+      },
+      "api_errors_excluded": 4,
+      "unscored": 0
+    },
+    {
+      "id": "openrouter/qwen/qwen3.8-flash",
+      "provider": "openrouter",
+      "model": "qwen/qwen3.8-flash",
+      "label": "qwen3.8-flash",
+      "overall": {
+        "n": 94,
+        "mean": 0.9414893617021277,
+        "ci95": [
+          0.8882978723404256,
+          0.9840425531914894
+        ]
+      },
+      "categories": {
+        "documents": {
+          "n": 20,
+          "mean": 0.975,
+          "ci95": [
+            0.925,
+            1.0
+          ]
+        },
+        "gst_tax": {
+          "n": 20,
+          "mean": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ]
+        },
+        "hinglish_support": {
+          "n": 15,
+          "mean": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ]
+        },
+        "law_policy": {
+          "n": 20,
+          "mean": 0.9,
+          "ci95": [
+            0.75,
+            1.0
+          ]
+        },
+        "payments_banking": {
+          "n": 19,
+          "mean": 0.8421052631578947,
+          "ci95": [
+            0.6842105263157895,
+            1.0
+          ]
+        }
+      },
+      "languages": {
+        "en": {
+          "n": 66,
+          "mean": 0.9166666666666666,
+          "ci95": [
+            0.8484848484848485,
+            0.9772727272727273
+          ]
+        },
+        "hi": {
+          "n": 7,
+          "mean": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ]
+        },
+        "hinglish": {
+          "n": 21,
+          "mean": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "api_errors_excluded": 0,
+      "unscored": 0
+    }
+  ],
+  "examples": {
+    "gst_tax": [
+      {
+        "id": "gst-001",
+        "prompt": "A shop sells a pair of shoes for ₹8,500 before tax. GST is charged at 18%. What total amount does the customer pay? Reply with only the number (rupees, no commas or ₹ symbol).",
+        "language": "en",
+        "answer_type": "numeric",
+        "difficulty": "easy",
+        "reference_answer": 10030,
+        "worked_solution": "GST = ₹8,500 × 18% = ₹1,530. Total = ₹8,500 + ₹1,530 = ₹10,030."
+      },
+      {
+        "id": "gst-005",
+        "prompt": "A Pune wholesaler sells goods worth ₹45,000 (before tax) to a Pune retailer. The total GST rate is 18%, split equally between CGST and SGST because the sale is within the same state. What is the CGST amount? Reply with only the number (rupees, no commas or ₹ symbol).",
+        "language": "en",
+        "answer_type": "numeric",
+        "difficulty": "medium",
+        "reference_answer": 4050,
+        "worked_solution": "Total GST = ₹45,000 × 18% = ₹8,100. CGST is half of that: ₹45,000 × 9% = ₹4,050."
+      },
+      {
+        "id": "gst-011",
+        "prompt": "A customer paid ₹9,440 for a gadget. This amount is the price after a 20% discount on the pre-tax price, plus 18% GST on the discounted price. What was the original pre-tax price before the discount? Reply with only the number (rupees, no commas or ₹ symbol).",
+        "language": "en",
+        "answer_type": "numeric",
+        "difficulty": "hard",
+        "reference_answer": 10000,
+        "worked_solution": "Discounted pre-tax price = ₹9,440 ÷ 1.18 = ₹8,000. Original = ₹8,000 ÷ 0.80 = ₹10,000. Check: ₹10,000 × 0.80 = ₹8,000; × 1.18 = ₹9,440."
+      }
+    ],
+    "hinglish_support": [
+      {
+        "id": "hin-001",
+        "prompt": "Classify the customer's message into exactly one intent from: delivery_delay, payment_debited_no_order, product_defect, refund_status, cancel_order, other. Reply with only the label.\n\nMessage: \"Mera order 6 din se nahi aaya, tracking bhi 3 din se update nahi ho rahi. Kab tak aayega?\"",
+        "language": "hinglish",
+        "answer_type": "exact",
+        "difficulty": "easy",
+        "reference_answer": "delivery_delay",
+        "worked_solution": "The customer's complaint is that the parcel has not arrived and tracking is stuck: delivery_delay."
+      },
+      {
+        "id": "hin-002",
+        "prompt": "Classify the customer's message into exactly one intent from: delivery_delay, payment_debited_no_order, product_defect, refund_status, cancel_order, other. Reply with only the label.\n\nMessage: \"Bhai paise kat gaye mere account se par app me order confirm hi nahi dikha raha.\"",
+        "language": "hinglish",
+        "answer_type": "exact",
+        "difficulty": "easy",
+        "reference_answer": "payment_debited_no_order",
+        "worked_solution": "Money was debited but no order is visible: payment_debited_no_order."
+      },
+      {
+        "id": "hin-004",
+        "prompt": "Classify the customer's message into exactly one intent from: delivery_delay, payment_debited_no_order, product_defect, refund_status, cancel_order, other. Reply with only the label.\n\nMessage: \"Maine 10 din pehle return kiya tha, aap log ne bola refund approve ho gaya. Abhi tak paisa wapas nahi aaya.\"",
+        "language": "hinglish",
+        "answer_type": "exact",
+        "difficulty": "medium",
+        "reference_answer": "refund_status",
+        "worked_solution": "The refund is already approved; the customer asks where the money is: refund_status (not cancel_order)."
+      }
+    ],
+    "documents": [
+      {
+        "id": "doc-001",
+        "prompt": "Extract the details from this synthetic invoice. Reply with only a JSON object with these keys: invoice_number (string), invoice_date (string as written), seller_gstin (string), grand_total (number in rupees).\n\n*** SYNTHETIC DOCUMENT - NOT A REAL INVOICE ***\nTAX INVOICE\nInvoice No: INV/2025-26/0142    Date: 14-08-2025\nSeller: Demo Textiles Pvt Ltd\nSeller GSTIN: 27ABCDE1234F1Z5\nBuyer: Test Retail LLP\nBuyer GSTIN: 27PQRST5678G1Z2\nPlace of supply: Maharashtra (27)\n\nNo | Description | HSN | Qty | Rate | Amount | GST%\n1 | Cotton fabric | 5208 | 120 | ₹185 | ₹22,200 | 5%\n2 | Polyester thread | 5401 | 40 | ₹95 | ₹3,800 | 18%\nSub-total: ₹26,000\nTaxable value: ₹26,000\nCGST (half of total GST): ₹897\nSGST (half of total GST): ₹897\nGrand total: ₹27,794",
+        "language": "en",
+        "answer_type": "extraction",
+        "difficulty": "easy",
+        "reference_answer": {
+          "invoice_number": "INV/2025-26/0142",
+          "invoice_date": "14-08-2025",
+          "seller_gstin": "27ABCDE1234F1Z5",
+          "grand_total": 27794
+        },
+        "worked_solution": "Read directly from the header and last line. Check: line 1 = 120 × 185 = ₹22,200 (GST 5%); line 2 = 40 × 95 = ₹3,800 (GST 18%); taxable ₹26,000; GST ₹1,794; grand total ₹27,794."
+      },
+      {
+        "id": "doc-002",
+        "prompt": "From this synthetic invoice (same-state supply, so CGST and SGST are equal), what is the CGST amount?\n\n*** SYNTHETIC DOCUMENT - NOT A REAL INVOICE ***\nTAX INVOICE\nInvoice No: DS/0877    Date: 03-11-2025\nSeller: Demo Stationers\nSeller GSTIN: 29AAPQR1111B1Z9\nBuyer: Sample Offices Pvt Ltd\nBuyer GSTIN: 29LMNOP2222C1Z4\nPlace of supply: Karnataka (29)\n\nNo | Description | HSN | Qty | Rate | Amount | GST%\n1 | A4 paper ream | 4802 | 50 | ₹310 | ₹15,500 | 18%\n2 | Gel pens (box) | 9608 | 30 | ₹120 | ₹3,600 | 18%\n3 | File folders | 4820 | 100 | ₹22 | ₹2,200 | 18%\nSub-total: ₹21,300\nTaxable value: ₹21,300\nCGST (half of total GST): ₹1,917\nSGST (half of total GST): ₹1,917\nGrand total: ₹25,134\n Reply with only the number (rupees, no commas or ₹ symbol).",
+        "language": "en",
+        "answer_type": "numeric",
+        "difficulty": "medium",
+        "reference_answer": 1917,
+        "worked_solution": "Taxable value = 50×310 + 30×120 + 100×22 = 15,500 + 3,600 + 2,200 = ₹21,300. Total GST at 18% = ₹3,834. CGST = half = ₹1,917. (Printed on the invoice as the CGST line.)"
+      },
+      {
+        "id": "doc-007",
+        "prompt": "This synthetic invoice includes a discount applied before GST. Extract: Reply with only a JSON object with these keys: discount_amount (number in rupees), taxable_value (number in rupees), grand_total (number in rupees).\n\n*** SYNTHETIC DOCUMENT - NOT A REAL INVOICE ***\nTAX INVOICE\nInvoice No: DF-KOL/1180    Date: 05-02-2026\nSeller: Demo Furnitures\nSeller GSTIN: 19JKLMN3434P1Z8\nBuyer: Test Hotels Pvt Ltd\nBuyer GSTIN: 19QRSTU5656V1Z5\nPlace of supply: West Bengal (19)\n\nNo | Description | HSN | Qty | Rate | Amount | GST%\n1 | Office chairs | 9401 | 20 | ₹4,200 | ₹84,000 | 18%\n2 | Conference table | 9403 | 2 | ₹18,500 | ₹37,000 | 18%\nSub-total: ₹1,21,000\nLess: discount @ 10% on sub-total: -₹12,100\nTaxable value: ₹1,08,900\nCGST (half of total GST): ₹9,801\nSGST (half of total GST): ₹9,801\nGrand total: ₹1,28,502",
+        "language": "en",
+        "answer_type": "extraction",
+        "difficulty": "hard",
+        "reference_answer": {
+          "discount_amount": 12100,
+          "taxable_value": 108900,
+          "grand_total": 128502
+        },
+        "worked_solution": "Sub-total = 20×4,200 + 2×18,500 = 84,000 + 37,000 = ₹1,21,000. Discount 10% = ₹12,100. Taxable = ₹1,08,900. GST 18% = ₹19,602. Grand total = ₹1,28,502."
+      }
+    ],
+    "law_policy": [
+      {
+        "id": "law-001",
+        "prompt": "Under the Consumer Protection Act, 2019, within how many years from the date the cause of action arose must a consumer complaint ordinarily be filed? Reply with only the number.",
+        "language": "en",
+        "answer_type": "numeric",
+        "difficulty": "easy",
+        "reference_answer": 2,
+        "worked_solution": "Section 69: a Commission shall not admit a complaint unless it is filed within two years from the date on which the cause of action arose.",
+        "source_url": "https://www.indiacode.nic.in/show-data?actid=AC_CEN_21_44_00007_201935_1596441164903&orderno=69"
+      },
+      {
+        "id": "law-002",
+        "prompt": "A consumer received a defective washing machine and the cause of action arose on 10 January 2024. They file a complaint on 5 March 2026. Assuming no application to condone delay is made, is the complaint within the limitation period of the Consumer Protection Act, 2019? Reply with only yes or no.",
+        "language": "en",
+        "answer_type": "exact",
+        "difficulty": "medium",
+        "reference_answer": "no",
+        "worked_solution": "Limitation is two years (section 69): it ended on 10 January 2026. 5 March 2026 is after that date, so the complaint is late: no.",
+        "source_url": "https://www.indiacode.nic.in/show-data?actid=AC_CEN_21_44_00007_201935_1596441164903&orderno=69"
+      },
+      {
+        "id": "law-007",
+        "prompt": "A consumer paid exactly ₹50,00,000 (₹50 lakh) as consideration for a service and wants to file a complaint. Under the Consumer Protection (Jurisdiction of the District Commission, the State Commission and the National Commission) Rules, 2021, which Consumer Commission has pecuniary jurisdiction? Reply with only one of: District, State, National.",
+        "language": "en",
+        "answer_type": "exact",
+        "difficulty": "hard",
+        "reference_answer": "District",
+        "worked_solution": "The District Commission's limit is 'does not exceed' ₹50 lakh, so exactly ₹50 lakh is still within the District Commission; the State Commission starts above ₹50 lakh.",
+        "source_url": "https://www.thc.nic.in/Central%20Governmental%20Rules/Consumer%20Protection%20(Jurisdiction%20of%20the%20District%20Commission,%20the%20State%20Commission%20and%20the%20National%20Commission)%20Rules,%202021.pdf"
+      }
+    ],
+    "payments_banking": [
+      {
+        "id": "pay-001",
+        "prompt": "A customer sends ₹5,000 by UPI to a friend. The money is debited from their account but the friend's account is not credited. The bank reverses the money on T+4. T is the day of the transaction; count plain days and ignore holidays. Using the RBI TAT framework (auto-reversal by T+1, ₹100 per day of delay beyond that), how much compensation in rupees is the customer owed? Reply with only the number.",
+        "language": "en",
+        "answer_type": "numeric",
+        "difficulty": "medium",
+        "reference_answer": 300,
+        "worked_solution": "UPI fund transfer, debited but not credited: auto-reversal due by T+1; compensation ₹100 per day beyond T+1. Reversal on T+4 is 3 days late → 3 × ₹100 = ₹300.",
+        "source_url": "https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=11693"
+      },
+      {
+        "id": "pay-003",
+        "prompt": "A customer pays a merchant by UPI. The account is debited but no confirmation reaches the merchant, and the bank auto-reverses the money on T+5. T is the day of the transaction; count plain days and ignore holidays. Under the RBI TAT framework (UPI merchant payments: auto-reversal within T+5, ₹100 per day of delay beyond that), how much compensation in rupees is owed? Reply with only the number.",
+        "language": "en",
+        "answer_type": "numeric",
+        "difficulty": "easy",
+        "reference_answer": 0,
+        "worked_solution": "UPI merchant payment: auto-reversal within T+5. Reversal on T+5 is on time, so there is no delay and compensation is ₹0.",
+        "source_url": "https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=11693"
+      },
+      {
+        "id": "pay-008",
+        "prompt": "Per the RBI framework on turnaround time (TAT) for failed transactions, by which day (counted from the transaction day T) must a bank complete the auto-reversal when a UPI fund transfer debits the sender but does not credit the beneficiary? Reply in the form T+N, e.g. T+2.",
+        "language": "en",
+        "answer_type": "exact",
+        "difficulty": "easy",
+        "reference_answer": "T+1",
+        "worked_solution": "UPI transfer of funds, account debited but beneficiary not credited: auto-reversal by the beneficiary bank latest on T+1.",
+        "source_url": "https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=11693"
+      }
+    ]
+  }
+}

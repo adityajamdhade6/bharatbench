@@ -1,0 +1,18 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+dist/
+
+# Model response caches (results files themselves can be committed)
+results/**/cache/
+.cache/
+
+# Site
+site/node_modules/
+site/.next/
+site/out/
+
+.DS_Store

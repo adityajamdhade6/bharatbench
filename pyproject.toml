@@ -1,0 +1,27 @@
+[project]
+name = "bharatbench"
+version = "0.1.0"
+description = "A public benchmark of how well LLMs handle real Indian tasks."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "httpx>=0.28.1",
+    "jsonschema>=4.26.0",
+    "python-dotenv>=1.2.4",
+]
+
+[project.scripts]
+bharatbench = "bharatbench.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/bharatbench"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
