@@ -6,7 +6,7 @@ version: 0.1.0
 date-released: 2026-10-08
 license: MIT
 repository-code: "https://github.com/adityajamdhade6/bharatbench"
-url: "https://github.com/adityajamdhade6/bharatbench"
+url: "https://bharatbench.vercel.app/"
 abstract: >-
   BharatBench measures how well large language models handle real Indian tasks:
   GST and tax math, Hinglish and Hindi customer support, extraction from Indian
@@ -20,4 +20,5 @@ keywords:
   - Hinglish
   - evaluation
 authors:
-  - name: "BharatBench contributors"
+  - family-names: "Jamdhade"
+    given-names: "Aditya"

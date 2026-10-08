@@ -2,6 +2,8 @@
 
 A public benchmark of how well LLMs handle **real Indian tasks**: GST and tax math, Hinglish and Hindi customer support, extracting fields from Indian documents, Indian law and policy, and payments and banking support. Every task has a worked solution or an official source link, every document is synthetic, and a private held-out set guards against training on the answers.
 
+**Live leaderboard: <https://bharatbench.vercel.app/>**
+
 [![tests](https://github.com/adityajamdhade6/bharatbench/actions/workflows/tests.yml/badge.svg)](https://github.com/adityajamdhade6/bharatbench/actions/workflows/tests.yml)
 
 ## Headline finding

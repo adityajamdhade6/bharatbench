@@ -206,6 +206,7 @@ def write_analysis(run_dir: Path, data_dir: Path, out: Path) -> str:
 # ---------------------------------------------------------------- launch text (numbers from scores.json only)
 README_START, README_END = "<!-- headline:start -->", "<!-- headline:end -->"
 REPO_URL = "https://github.com/adityajamdhade6/bharatbench"
+SITE_URL = "https://bharatbench.vercel.app/"
 
 
 RULE_HEAVY = {"gst_tax", "law_policy", "payments_banking"}
@@ -277,7 +278,7 @@ What I would not claim: the tasks are few per category, so the confidence interv
 Code is MIT, data is CC BY 4.0. If you work on Indian-language or fintech AI, I would love tasks, corrections and models to add.
 
 Repo: {REPO_URL}
-Leaderboard: [add site link]
+Leaderboard: {SITE_URL}
 
 #LLM #India #Hinglish #Benchmark #AIEvaluation"""
 
@@ -298,7 +299,7 @@ def x_thread(f: dict) -> list[str]:
     if f["gap_models"]:
         t.append(f"Hinglish vs English: Hinglish is lower for {f['hinglish_lower_count']} of {f['gap_models']} models; averaged, {pct(f['mean_hinglish'])} Hinglish vs {pct(f['mean_en'])} English. Different tasks per language, so no clean verdict.")
     t.append(f"Weakest single result: {lc['model']} on {name(lc['category'])}, {pct(lc['value'])}.")
-    t.append(f"Caveats: few tasks per category, answer checks were AI-assisted (human spot-check pending), and a private held-out set guards against training on the answers. Code MIT, data CC BY 4.0: {REPO_URL}")
+    t.append(f"Caveats: few tasks per category, answer checks were AI-assisted (human spot-check pending), and a private held-out set guards against training on the answers. Code MIT, data CC BY 4.0. Live: {SITE_URL} Code: {REPO_URL}")
     return t
 
 
