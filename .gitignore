@@ -16,3 +16,8 @@ site/.next/
 site/out/
 
 .DS_Store
+
+# Private held-out set (its own private repository) and unpublished launch drafts
+heldout/
+launch/
+*.log

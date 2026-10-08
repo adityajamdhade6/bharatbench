@@ -3,12 +3,16 @@ name = "bharatbench"
 version = "0.1.0"
 description = "A public benchmark of how well LLMs handle real Indian tasks."
 readme = "README.md"
+license = { text = "MIT" }
 requires-python = ">=3.11"
 dependencies = [
     "httpx>=0.28.1",
     "jsonschema>=4.26.0",
     "python-dotenv>=1.2.4",
 ]
+
+[project.urls]
+Repository = "https://github.com/adityajamdhade6/bharatbench"
 
 [project.scripts]
 bharatbench = "bharatbench.cli:main"

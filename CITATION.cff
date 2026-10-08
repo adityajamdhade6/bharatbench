@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use BharatBench, please cite it as below. Code is MIT-licensed; the dataset is CC BY 4.0 (see LICENSE-DATA)."
+title: "BharatBench: a benchmark of how well LLMs handle real Indian tasks"
+type: dataset
+version: 0.1.0
+date-released: 2026-10-08
+license: MIT
+repository-code: "https://github.com/adityajamdhade6/bharatbench"
+url: "https://github.com/adityajamdhade6/bharatbench"
+abstract: >-
+  BharatBench measures how well large language models handle real Indian tasks:
+  GST and tax math, Hinglish and Hindi customer support, extraction from Indian
+  documents, Indian law and policy, and payments and banking support. Every
+  task has a worked solution or an official source, and all documents are
+  synthetic. A private held-out set guards against training on the answers.
+keywords:
+  - benchmark
+  - large language models
+  - India
+  - Hinglish
+  - evaluation
+authors:
+  - name: "BharatBench contributors"

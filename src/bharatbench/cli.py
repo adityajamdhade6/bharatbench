@@ -5,6 +5,7 @@
   bharatbench judge-sample --run-ids R1,R2 --n 50
   bharatbench judge-agree --grades FILE.csv --judge MODEL
   bharatbench export --run-id R --out site/data/leaderboard.json
+  bharatbench report --run-id R --out analysis.md
 """
 from __future__ import annotations
 
@@ -18,6 +19,7 @@ from dotenv import load_dotenv
 from .adapters import AdapterError, Settings, build_adapter
 from .cache import ResponseCache
 from .export import write_export
+from .report import compute_facts, update_readme, write_analysis, write_launch
 from .runner import TEMPERATURE, run
 from .scoring.calibration import read_grades, run_agreement, sample_items, write_sheet
 from .scoring.rubric import Judge
@@ -70,6 +72,13 @@ def build_parser() -> argparse.ArgumentParser:
     x.add_argument("--run-id", required=True)
     x.add_argument("--out", type=Path, default=Path("site/data/leaderboard.json"))
     _dirs(x)
+
+    rp = sub.add_parser("report", help="write analysis.md (leaderboard, categories, languages, failures) from scores.json")
+    rp.add_argument("--run-id", required=True)
+    rp.add_argument("--out", type=Path, default=Path("analysis.md"))
+    rp.add_argument("--readme", type=Path, default=None, help="refresh the headline block between the headline markers")
+    rp.add_argument("--launch-dir", type=Path, default=None, help="also write linkedin.md and x-thread.md drafts here")
+    _dirs(rp)
 
     a = sub.add_parser("judge-agree", help="compare the judge with your hand grades")
     a.add_argument("--grades", type=Path, required=True, help="the sheet with human_score filled in")
@@ -194,11 +203,29 @@ def _cmd_export(args, adapter_factory) -> int:
     return 0
 
 
+def _cmd_report(args, adapter_factory) -> int:
+    run_dir = args.results_dir / args.run_id
+    if not (run_dir / "item_scores.jsonl").exists():
+        print(f"error: {run_dir / 'item_scores.jsonl'} not found; run `bharatbench score` first", file=sys.stderr)
+        return 2
+    write_analysis(run_dir, args.data_dir, args.out)
+    print(f"Wrote {args.out}")
+    if args.readme or args.launch_dir:
+        facts = compute_facts(json.loads((run_dir / "scores.json").read_text(encoding="utf-8")))
+        if args.readme:
+            update_readme(args.readme, facts)
+            print(f"Updated headline in {args.readme}")
+        if args.launch_dir:
+            write_launch(facts, args.launch_dir)
+            print(f"Wrote launch drafts to {args.launch_dir}")
+    return 0
+
+
 def main(argv: list[str] | None = None, adapter_factory=build_adapter) -> int:
     args = build_parser().parse_args(argv)
     load_dotenv()  # API keys come only from .env / the environment
     handler = {"run": _cmd_run, "score": _cmd_score, "judge-sample": _cmd_judge_sample,
-               "judge-agree": _cmd_judge_agree, "export": _cmd_export}[args.command]
+               "judge-agree": _cmd_judge_agree, "export": _cmd_export, "report": _cmd_report}[args.command]
     return handler(args, adapter_factory)
 
 
